@@ -1,27 +1,17 @@
 {% extends "app/base.html" %}
 
 {% block content %}
-    <div class="container">
-    <h1>Post List</h1>
-    {% for post in posts %}
-        <div>
-            <a href="{% url 'post_detail' post.id %}">
-                {{ post.id }}. {{ post.title }}
-            </a>
-        </div>
-    {% endfor %}
-
-    {% if ai_images %}
-        <h2>Recent AI Generated Images</h2>
-        {% for image in ai_images %}
-            <div class="mb-3">
-                <img src="{{ image.image_url }}" alt="AI Generated Image" class="img-fluid" style="max-width: 300px">
-                <p>{{ image.prompt }}</p>
-            </div>
-            {% endfor %}
+    <div class="container text-center">
+        {% if user.is_authenticated %}
+            {% if ai_images %}
+                <div class="mt-4">
+                    <div class="mb-3">
+                        <img src="{{ ai_images.0.image_url }}" alt="Recent AI Generated Image" class="img-fluid" style="max-width: 500px">
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <p>로그인하여 AI 이미지 생성을 시작해보세요.</p>
         {% endif %}
-
-    <hr>
-    <a href="{% url 'create_post' %}" class="btn btn-primary">새 글 작성하기</a>
     </div>
 {% endblock %}

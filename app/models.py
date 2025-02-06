@@ -11,8 +11,9 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
-    tag_set = models.ManyToManyField("Tag", blank=True)
     image = models.URLField(blank=True, null=True, max_length=1000)
+    generated_prompt = models.TextField(blank=True, null=True)
+    is_public = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -67,8 +68,8 @@ class AIGeneration(models.Model):
         verbose_name_plural = 'AI 생성 이미지들'
 
 
-class Tag(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+# class Tag(models.Model):
+#     name = models.CharField(max_length=100, unique=True)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name

@@ -153,6 +153,10 @@ def generate_image(request):
         image_url = generate_image_with_dalle(generated_prompt)
         if not image_url:
             return JsonResponse({"error": "이미지 생성에 실패했습니다."}, status=500)
+        
+        blob_url = save_image_to_blob(image_url, generated_prompt, request.user.id)
+        if not blob_url:
+            return JsonResponse({"error": "이미지 저장에 실패했습니다."}, status=500)
 
         return JsonResponse({
             "image_url": image_url,
@@ -164,11 +168,19 @@ def generate_image(request):
         return JsonResponse({"error": str(e)}, status=500)
 
 @login_required
+<<<<<<< HEAD
 def index_ai(request: HttpRequest) -> HttpResponse:
     posts = Post.objects.filter(user=request.user).order_by('-date_posted')
     ai_images = AIGeneration.objects.filter(user=request.user).order_by('-created_at')[:5]
     return render(request, "app/index_ai.html", {
         "posts": posts,
+=======
+def index(request: HttpRequest) -> HttpResponse:
+    ai_images = None
+    if request.user.is_authenticated:
+        ai_images = AIGeneration.objects.filter(user=request.user).order_by('-created_at')[:1]
+    return render(request, "app/index.html", {
+>>>>>>> acea3a05278c96509536d35a6a157faa44d276f8
         "ai_images": ai_images
     })
 
@@ -187,6 +199,7 @@ def create_post(request: HttpRequest) -> HttpResponse:
             post.user = request.user
 
             generated_image_url = request.POST.get('generated_image_url')
+            generated_prompt = request.POST.get('generated_prompt')
             if generated_image_url:
                 blob_url = save_image_to_blob(generated_image_url, form.cleaned_data['prompt'], request.user.id)
                 if blob_url:
@@ -195,9 +208,11 @@ def create_post(request: HttpRequest) -> HttpResponse:
                     AIGeneration.objects.create(
                         user=request.user,
                         prompt=form.cleaned_data['prompt'],
-                        generated_prompt="",
+                        generated_prompt=generated_prompt,
                         image_url=blob_url
                     )
+            if generated_prompt:
+                post.generated_prompt = generated_prompt
 
             post.save()
             form.save_m2m()
@@ -226,5 +241,41 @@ def delete_post(request: HttpRequest, pk: int) -> HttpResponse:
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         post.delete()
+<<<<<<< HEAD
         return redirect("index_ai")
     return render(request, "app/post_detail.html", {"post": post})
+=======
+        return redirect("index")
+    return render(request, "app/post_detail.html", {"post": post})
+
+@login_required
+def my_gallery(request):
+    """사용자의 개인 갤러리"""
+    search_query = request.GET.get('search', '')
+    posts = Post.objects.filter(user=request.user)
+
+    if search_query:
+        posts = posts.filter(title__icontains=search_query)
+    
+    posts = posts.order_by('-date_posted')
+    return render(request, "app/gallery.html", {
+        "posts": posts,
+        "gallery_type": "personal",
+        "search_query": search_query
+    })
+
+def public_gallery(request):
+    """공개 갤러리"""
+    search_query = request.GET.get('search', '')
+    posts = Post.objects.filter(is_public=True)
+
+    if search_query:
+        posts = posts.filter(title__icontains=search_query)
+
+    posts = posts.order_by('date_posted')
+    return render(request, "app/gallery.html", {
+        "posts": posts,
+        "gallery_type": "public",
+        "search_query": search_query
+    })
+>>>>>>> acea3a05278c96509536d35a6a157faa44d276f8

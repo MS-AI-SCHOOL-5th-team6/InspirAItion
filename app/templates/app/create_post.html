@@ -9,6 +9,7 @@
     <div id="imagePreview" style="display: none;">
         <img id="generatedImage" src="" alt="">
         <input type="hidden" name="generated_image_url" id="generatedImageUrl">
+        <input type="hidden" name="generated_prompt" id="generatedPrompt">
         <div class="mt-2">
             <button type="button" class="btn btn-secondary" onclick="cancelImage()">취소</button>
         </div>
@@ -56,6 +57,7 @@
         const data = await response.json();
         document.getElementById('generatedImage').src = data.image_url;
         document.getElementById('generatedImageUrl').value = data.image_url;
+        document.getElementById('generatedPrompt').value = data.generated_prompt;
         document.getElementById('imagePreview').style.display = 'block';
 
     } catch (error) {

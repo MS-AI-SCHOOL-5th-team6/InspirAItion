@@ -12,11 +12,18 @@ venv
 /.idea/dataSources.xml
 /.idea/watcherTasks.xml
 
+# migrations
+**/migrations
+
 # AI-Generated Images and logs
 ai_playground/images
 **/*.log
 
 # OSX Files
+<<<<<<< HEAD
 .DS_Store*.log
 templates/team6/main.txt
 templates/team6/main2.txt
+=======
+.DS_Store
+>>>>>>> acea3a05278c96509536d35a6a157faa44d276f8
