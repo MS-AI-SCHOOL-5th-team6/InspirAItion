@@ -19,7 +19,8 @@ def signup(request):
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            return redirect("/app/")
+            #return redirect("/app/")
+            return redirect("home")  # ✅ 변경된 부분
     else:
         form = SignUpForm()
     return render(request, "accounts/signup.html", {"form": form})
@@ -53,7 +54,8 @@ def profile_update(request):
                     print("에러:", str(e))
             
             profile.save()
-            return redirect('index')
+            #return redirect('index')
+            return redirect("profile")  # ✅ 변경된 부분
     else:
         form = ProfileUpdateForm(instance=request.user.profile)
 

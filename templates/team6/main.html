@@ -1,0 +1,160 @@
+<!-- templates/team6/main.html -->
+{% load static %}
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>{% block title %} InsperAItion {% endblock title %}</title>
+
+    {% bootstrap_css %}
+
+    <!-- ✅ Bootstrap 5 CSS (CDN만 사용) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
+
+    <!-- ✅ Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.png' %}" />
+
+    <!-- Font Awesome icons -->
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+
+    <!-- Google Fonts -->
+    <!-- 한글 IBM Plex Sans KR 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- 영어 -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&display=swap" rel="stylesheet" />
+
+    <!-- ✅ Main Stylesheet -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'css/dropdown-custom.css' %}" rel="stylesheet">
+
+    <!-- CSS 블록 (자식 템플릿에서 필요 시 덮어쓸 수 있음) -->
+    {% block css %}
+    {% endblock css%}
+</head>
+<body>
+    <main>
+    <!-- 헤더 포함 -->
+    <header>
+    <!-- 네비게이션 메뉴 -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}" style="font-weight: bold;">InsperAItion</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" 
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            About
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'about' %}">About</a></li>
+                            <li><a class="dropdown-item" href="{% url 'about' %}">Services</a></li>
+                            <li><a class="dropdown-item" href="{% url 'about' %}">Our Team</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ai_play' %}">AI Playground</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'art_gal' %}">Artwork</a>
+                    </li>
+
+                    <!-- 커뮤니티 드롭다운 -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Community
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'board' %}">Board</a></li>
+                            <li><a class="dropdown-item" href="#">Creative Space</a></li>
+                        </ul>
+                    </li>    
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'send_email' %}" target="_blank">Contact Us</a>
+                    </li>
+                </ul>
+
+                <!-- ✅ 로그인 & 회원가입 버튼 -->
+                <div class="d-flex align-items-center text-end me-3">
+                    {% if user.is_authenticated %}
+                        <!-- 🔹 로그인된 상태 -->
+                        <div class="dropdown-custom">
+                            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{{ user.profile.profile_image }}" alt="" width="28" height="28" class="rounded-circle me-2">
+                                <strong>{{ user.username }}</strong>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end text-small shadow">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">My Gallery</a></li>
+                                <li><a class="dropdown-item" href="#">My Community</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form action="{% url 'logout' %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item">Sign Out</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <!-- 🔹 로그아웃 상태 (로그인 & 회원가입 버튼) -->
+                        <button id="loginButton"
+                                type="button"
+                                class="btn btn-outline-light me-2"
+                                data-bs-toggle="modal"
+                                data-bs-target="#loginModal">
+                            Login
+                        </button>
+                        <button id="signupButton"
+                                type="button"
+                                class="btn btn-warning"
+                                data-bs-toggle="modal"
+                                data-bs-target="#signupModal">
+                            Sign-up
+                        </button>
+                    {% endif %}
+                </div>
+
+                <!-- ✅ 로그인 & 회원가입 모달 -->
+                {% include "loginmodal.html" %}
+            </div>
+        </div>
+    </nav>
+</header>
+
+    <!-- content -->
+    {% block content %}<!-- 본문 내용: 자식 템플릿에서 내용을 덮어쓸 곳 -->
+    {% endblock content%}
+</main>
+
+    <!-- FOOTER -->
+    <footer class="bg-light text-center text-lg-start">
+        <div class="text-center p-3">
+            <p><span style="font-weight: bold; font-size: 1.1em;">🎨🤖 <a href="{% url 'custom_admin' %}" style="font-weight: bold; font-size: 1.1em; text-decoration: none; color: inherit;">InsperAItion</a> 🤖🎨</span></p>
+            <p><span style="font-weight: bold;">@ 2025 6th Team, 3rd Project, </span> All Rights Reserved </p>
+            <p> ── MS AI School 5th ── </p>
+        </div>
+    </footer>
+
+    <!-- 기본 JS 파일 링크 -->
+    <script src="{% static 'js/scripts.js' %}"></script>
+
+    <!-- JS 블록 (자식 템플릿에서 필요 시 덮어쓸 수 있음) -->
+    {% block js %}
+    {% endblock js%}
+
+</body>
+</html>

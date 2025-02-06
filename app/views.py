@@ -164,10 +164,10 @@ def generate_image(request):
         return JsonResponse({"error": str(e)}, status=500)
 
 @login_required
-def index(request: HttpRequest) -> HttpResponse:
+def index_ai(request: HttpRequest) -> HttpResponse:
     posts = Post.objects.filter(user=request.user).order_by('-date_posted')
     ai_images = AIGeneration.objects.filter(user=request.user).order_by('-created_at')[:5]
-    return render(request, "app/index.html", {
+    return render(request, "app/index_ai.html", {
         "posts": posts,
         "ai_images": ai_images
     })
@@ -201,7 +201,7 @@ def create_post(request: HttpRequest) -> HttpResponse:
 
             post.save()
             form.save_m2m()
-            return redirect("index")
+            return redirect("index_ai")
     else:
         form = PostWithAIForm()
     return render(request, "app/create_post.html", {"form": form})
@@ -226,5 +226,5 @@ def delete_post(request: HttpRequest, pk: int) -> HttpResponse:
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         post.delete()
-        return redirect("index")
+        return redirect("index_ai")
     return render(request, "app/post_detail.html", {"post": post})

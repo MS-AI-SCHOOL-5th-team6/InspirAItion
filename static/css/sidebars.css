@@ -1,0 +1,53 @@
+/* 기본 사이드바 스타일 */
+.sidebars {
+  width: 280px;
+  height: 100vh;
+  transition: width 0.3s ease-in-out;
+}
+
+/* 반응형: 화면이 줄어들면 사이드바 축소 */
+@media (max-width: 768px) {
+  .sidebars {
+      width: 80px;
+      padding: 10px;
+  }
+  .sidebars span,
+  .sidebars .nav-link {
+      display: none;
+  }
+}
+
+/* 토글 버튼 스타일 */
+.btn-toggle {
+  padding: 0.25rem 0.5rem;
+  font-weight: 600;
+  color: var(--bs-emphasis-color);
+  background-color: transparent;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+.btn-toggle:hover,
+.btn-toggle:focus {
+  color: rgba(var(--bs-emphasis-color-rgb), 0.85);
+  background-color: var(--bs-tertiary-bg);
+}
+
+.btn-toggle::before {
+  width: 1.25em;
+  line-height: 0;
+  content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+  transition: transform 0.35s ease;
+  transform-origin: 0.5em 50%;
+}
+
+.btn-toggle[aria-expanded="true"] {
+  color: rgba(var(--bs-emphasis-color-rgb), 0.85);
+}
+.btn-toggle[aria-expanded="true"]::before {
+  transform: rotate(90deg);
+}
+
+/* 스크롤 가능한 사이드바 */
+.scrollarea {
+  overflow-y: auto;
+  max-height: 100vh;
+}

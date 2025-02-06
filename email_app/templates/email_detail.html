@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Email Details</h2>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title font-weight-bold">{{ email.subject }}</h5> <!-- 제목 강조 -->
+      <p class="card-text">
+        <strong>From:</strong> {{ email.sender.username }}<br>
+        <strong>To:</strong> {{ email.recipient.username }}<br>
+        <strong>Sent At:</strong> {{ email.sent_at|date:"F d, Y H:i" }}<br>
+      </p>
+      <p>{{ email.body }}</p>
+      <a href="{% url 'email_list' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+  </div>
+
+{% endblock %}

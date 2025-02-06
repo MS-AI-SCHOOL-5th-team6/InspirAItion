@@ -1,0 +1,9 @@
+<!-- team6/main.html -->
+{% extends "team6/main.html" %}
+{% block title %} Board {% endblock title %}
+
+{% load static %}
+
+{% block content%}
+{% include "app/index.html" %}  <!-- 'app/base.html'의 내용을 포함 -->
+{% endblock content %}

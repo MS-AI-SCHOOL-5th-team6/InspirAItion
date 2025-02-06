@@ -1,0 +1,113 @@
+<!-- team6/home.html -->
+{% extends "team6/main.html" %}
+{% block title %} AI_Playground {% endblock %}
+
+{% block css %}
+  {% load static %}
+  <!-- 자식 템플릿에서 추가할 CSS (필요한 경우) -->
+  <link href="{% static 'css/sidebars.css' %}" rel="stylesheet">
+{% endblock css %}
+
+
+{% block content %}
+
+<div class="container text-center mt-5 pt-5">
+    <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+    <div class="row d-flex flex-wrap">
+        <div class="col-12 col-md-4 bg-body-tertiary p-3">
+            <div class="sidebars">
+                <!-- 사이드바 시작 -->
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 100%;">
+                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                        <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+                        <span class="fs-4 bold-text">InsperAItion</span>
+                    </a>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" aria-current="page">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-body-emphasis">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-body-emphasis">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+                                Orders
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-body-emphasis">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                                Products
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-body-emphasis">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                                Customers
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                            <strong>nickname</strong>
+                        </a>
+                        <ul class="dropdown-menu text-small shadow">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">My Gallery</a></li>
+                            <li><a class="dropdown-item" href="#">My Community</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 사이드바 끝 -->
+
+        <!-- 왼쪽 사이드바 옆  -->
+        <div class="col-12 col-md-8 p-4">
+            <div class="row">
+                <!-- 이미지 표시 영역 -->
+                <div class="col-12 col-md-6">
+                    <h2 class="mb-4">AI_Playground</h2>
+                    <div class="border rounded bg-light d-flex justify-content-center align-items-center"
+                        style="width: 100%; max-width: 1024px; height: auto; aspect-ratio: 1/1;">
+                        <p class="text-muted">이미지 미리보기</p>
+                    </div>
+                </div>
+                <!-- 입력 필드와 버튼 -->
+                <div class="col-12 col-md-6">
+                    <br>
+                    <br>
+                    <div class="mt-4">
+                        <textarea class="form-control" rows="4" placeholder="프롬프트를 입력하세요"></textarea>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary">Generate</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="mt-4">
+                        <p style="text-align: left;"> 생성된 텍스트가 입력됩니다. </p>
+                        <textarea class="form-control" rows="4" placeholder=""></textarea>
+                        <div class="d-flex gap-2 mt-3">
+                            <button class="btn btn-secondary flex-fill">취소</button>
+                            <button class="btn btn-primary flex-fill">저장</button>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock content %}
+
+
+
+            

@@ -1,0 +1,17 @@
+<!-- artwork/templates/artwork/artwork_list.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artwork List</title>
+</head>
+<body>
+    <h1>Artwork List</h1>
+    <ul>
+        {% for artwork in artworks %}
+            <li>{{ artwork.title }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

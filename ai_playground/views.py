@@ -1,3 +1,12 @@
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import json
+from .genAI import gen_ai_image
+from .models import ImageGeneration
+from django.shortcuts import render
+from django.urls import path
+from . import views
 import os
 import time
 from django.shortcuts import render, redirect
@@ -7,6 +16,11 @@ from django.http import JsonResponse
 from openai import AzureOpenAI
 from .models import AIImageGeneration
 
+# by Jay---
+def play(request):
+    return render(request, "ai_playground/play.html")
+
+# by SM ---
 GPT_CLIENT = AzureOpenAI(
     azure_endpoint=settings.AZURE_OPENAI_ENDPOINT,
     api_key=settings.AZURE_OPENAI_API_KEY,
@@ -106,3 +120,4 @@ def image_history(request):
     """사용자의 이미지 생성 히스토리 보기"""
     images = AIImageGeneration.objects.filter(user=request.user)
     return render(request, "ai_playground/image_history.html", {"images": images})
+

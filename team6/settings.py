@@ -23,6 +23,7 @@ environ.Env.read_env(env_file=Path(__file__).resolve().parent.parent / ".env")
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -72,6 +73,7 @@ INSTALLED_APPS = [
     "ai_playground",
     "artwork",
     "config",
+    "email_app",
 ]
 
 MIDDLEWARE = [
@@ -91,7 +93,7 @@ ROOT_URLCONF = "team6.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -205,8 +207,8 @@ MEDIA_URL = f"https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_CONTAINE
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_URL = "/accounts/login/"
-LOGIN_REDIRECT_URL = "/app/"
-LOGOUT_REDIRECT_URL = "/app/"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 # LOGGING = {
 #     "version": 1,
